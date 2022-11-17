@@ -1,5 +1,7 @@
 # LABORATORY-AWS-CLOUDFORMATION
 
+It's better to use a yaml since we can add comment inside it
+
 ## Experiences
 
 - **Experience1**: Create a S3 with a name from parameters
