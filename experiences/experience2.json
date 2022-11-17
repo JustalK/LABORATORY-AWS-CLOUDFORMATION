@@ -39,10 +39,12 @@
         },
         "myInternetGateway": {
             "Type": "AWS::EC2::InternetGateway",
-            "Tags" : [
-                {"Key" : "Name", "Value" : "my-internet-gateway"},
-                {"Key" : "environment", "Value" : "production"}
-            ]
+            "Properties" : {
+                "Tags" : [
+                    {"Key" : "Name", "Value" : "my-internet-gateway"},
+                    {"Key" : "environment", "Value" : "production"}
+                ]
+            }
         },
         "GatewayToInternet": {
             "Type": "AWS::EC2::VPCGatewayAttachment",
