@@ -11,6 +11,13 @@ Resources:
       Tags:
         - Key: stack
           Value: production
+  myLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: "Whatever"
+      LaunchTemplateData:
+        ImageId: "ami-094125af156557ca2"
+        InstanceType: "t2.micro"
   # Creating the Security Group
   myInstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
