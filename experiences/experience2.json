@@ -37,22 +37,40 @@
                 ]
             }
         },
-        "InternetGateway": {
+        "myInternetGateway": {
             "Type": "AWS::EC2::InternetGateway",
-                            "Tags" : [
-                    {"Key" : "Name", "Value" : "my-private-subnet"},
-                    {"Key" : "environment", "Value" : "production"}
-                ]
+            "Tags" : [
+                {"Key" : "Name", "Value" : "my-internet-gateway"},
+                {"Key" : "environment", "Value" : "production"}
+            ]
         },
         "GatewayToInternet": {
             "Type": "AWS::EC2::VPCGatewayAttachment",
             "Properties" : {
                 "VpcId" : { "Ref" : "myVPC" },
-                "InternetGatewayId" : { "Ref" : "myVPC" },
-                "Tags" : [
-                    {"Key" : "Name", "Value" : "my-private-subnet"},
-                    {"Key" : "environment", "Value" : "production"}
-                ]
+                "InternetGatewayId" : { "Ref" : "myInternetGateway" }
+            }
+        },
+        "myPublicRouteTable": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties" : {
+                "VpcId" : { "Ref" : "myVPC" }
+            }
+        },
+        "PublicRoute": {
+            "Type": "AWS::EC2::Route",
+            "DependsOn": "GatewayToInternet",
+            "Properties" : {
+                "RouteTableId" : { "Ref" : "myPublicRouteTable" },
+                "DestinationCidrBlock" : "0.0.0.0/0",
+                "GatewayId" : { "Ref" : "myInternetGateway" }
+            }
+        },
+        "PublicSubnetRouteTableAssociation": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties" : {
+                "SubnetId" : { "Ref" : "myPublicSubnet" },
+                "RouteTableId" : { "Ref" : "myPublicRouteTable" }
             }
         }
     }
