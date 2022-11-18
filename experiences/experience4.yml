@@ -9,8 +9,20 @@ Resources:
         Fn::Base64: 
           !Sub |
               #!/bin/bash
-              cd ~
-              echo "test"
+              sudo apt update
+              sudo apt upgrade
+              sudo apt dist-upgrade
+              sudo apt-get autoremove
+              sudo apt install update-manager-core
+              sudo do-release-upgrade
+              sudo apt install nodejs
+              curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+              echo 'export NVM_DIR="/home/ubuntu/.nvm"' >> /home/ubuntu/.bashrc
+              echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+              . /home/ubuntu/.nvm/nvm.sh
+              . /home/ubuntu/.profile
+              . /home/ubuntu/.bashrc
+              nvm install --lts
       BlockDeviceMappings: 
       - DeviceName: "/dev/sdm"
         Ebs: 
