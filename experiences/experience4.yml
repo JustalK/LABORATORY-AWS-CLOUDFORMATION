@@ -3,32 +3,59 @@ Resources:
     Type: AWS::EC2::Instance
     Properties: 
       ImageId: "ami-094125af156557ca2"
-      KeyName: "seaoilstage"
+      KeyName: "testk"
       AvailabilityZone: "us-west-2a"
+      SecurityGroupIds:
+      - !Ref mySecurityGroup
       UserData:
         Fn::Base64: 
           !Sub |
-              #!/bin/bash
-              sudo apt update
-              sudo apt upgrade
-              sudo apt dist-upgrade
-              sudo apt-get autoremove
-              sudo apt install update-manager-core
-              sudo do-release-upgrade
-              sudo apt install nodejs
-              curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-              echo 'export NVM_DIR="/home/ubuntu/.nvm"' >> /home/ubuntu/.bashrc
-              echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-              . /home/ubuntu/.nvm/nvm.sh
-              . /home/ubuntu/.profile
-              . /home/ubuntu/.bashrc
-              nvm install --lts
-      BlockDeviceMappings: 
-      - DeviceName: "/dev/sdm"
-        Ebs: 
-          VolumeType: "gp3"
-          Iops: "3000"
-          DeleteOnTermination: "true"
-          VolumeSize: "20"
-      - DeviceName: "/dev/sdk"
-        NoDevice: {}
+            #!/bin/bash
+            sudo apt update
+            sudo apt upgrade
+            sudo apt dist-upgrade
+            sudo apt-get autoremove
+            sudo apt install update-manager-core
+            sudo do-release-upgrade
+            sudo apt install nodejs
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm install --lts
+  mySecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "Allow HTTP/HTTPS and SSH inbound and outbound traffic"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+
+
+      # UserData:
+      #   Fn::Base64: 
+      #     !Sub |
+      #       #!/bin/bash
+      #       sudo apt update
+                      # sudo apt upgrade
+            # sudo apt dist-upgrade
+            # sudo apt-get autoremove
+            # sudo apt install update-manager-core
+            # sudo do-release-upgrade
+            # sudo apt install nodejs
+            # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+            # echo 'export NVM_DIR="/home/ubuntu/.nvm"' >> /home/ubuntu/.bashrc
+            # echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+            # . /home/ubuntu/.nvm/nvm.sh
+            # . /home/ubuntu/.profile
+            # . /home/ubuntu/.bashrc
+            # nvm install --lts
