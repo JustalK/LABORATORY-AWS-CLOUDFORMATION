@@ -20,13 +20,18 @@ Resources:
             echo "[AUTOREMOVE] DONE" >> /tmp/script.log
             yum install nodejs
             echo "[NODEJS] DONE" >> /tmp/script.log
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+            wget https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh -P /home/ec2-user/
+            bash /home/ec2-user/install.sh
             echo 'export NVM_DIR="/home/ec2-user/.nvm"' >> /home/ec2-user/.bashrc
-            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> /home/ubuntu/.bashrc
-            echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> /home/ubuntu/.bashrc
+            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> /home/ec2-user/.bashrc
+            echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> /home/ec2-user/.bashrc
             . /home/ec2-user/.bashrc
-            nvm install --lts
+            nvm install 16.0.0
             echo "[NVM] DONE" >> /tmp/script.log
+            npm install npm@latest -g
+            echo "[NPM] DONE" >> /tmp/script.log
+            npm i -g pm2
+            echo "[PM2] DONE" >> /tmp/script.log
   mySecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
