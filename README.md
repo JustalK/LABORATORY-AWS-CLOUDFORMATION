@@ -4,6 +4,16 @@ This laboratory is a project created for testing and learning how to use all the
 
 I started using the my cloudformation template as JSON but discover after using it that YAML is actually better since I can the comment in my template for explaning part or commenting part that I dont wanna use.
 
+## How to use a template
+
+![./documentation/4.png](./documentation/4.png)
+
+![./documentation/5.png](./documentation/5.png)
+
+![./documentation/6.png](./documentation/6.png)
+
+![./documentation/7.png](./documentation/7.png)
+
 ## Experiences
 
 - **Experience1**: Create a S3 with a name from parameters
