@@ -6,11 +6,21 @@ I started using the my cloudformation template as JSON but discover after using 
 
 ## How to use a template
 
+For using the template from this repository, you need to first go on the Cloudfront of AWS and click on the button `Create Stack`
+
 ![./documentation/4.png](./documentation/4.png)
+
+Once there, choose `Template is Ready` and click on `Upload a Template`.
+To Note, the template uploaded will be upload on S3 and the url will be shown under.
 
 ![./documentation/5.png](./documentation/5.png)
 
+Choose the name on the template and click `Next` on every other screen.
+You might have to enter parameter depending of the template used.
+
 ![./documentation/6.png](./documentation/6.png)
+
+Now, just relax and look at the stacks being created.
 
 ![./documentation/7.png](./documentation/7.png)
 
