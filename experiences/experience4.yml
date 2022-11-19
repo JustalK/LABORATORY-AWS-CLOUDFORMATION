@@ -20,18 +20,25 @@ Resources:
             echo "[AUTOREMOVE] DONE" >> /tmp/script.log
             yum install nodejs
             echo "[NODEJS] DONE" >> /tmp/script.log
-            wget https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh -P /home/ec2-user/
-            bash /home/ec2-user/install.sh
-            echo 'export NVM_DIR="/home/ec2-user/.nvm"' >> /home/ec2-user/.bashrc
-            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> /home/ec2-user/.bashrc
-            echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> /home/ec2-user/.bashrc
-            . /home/ec2-user/.bashrc
-            nvm install 16.0.0
-            echo "[NVM] DONE" >> /tmp/script.log
+            sudo -u ec2-user -i <<'EOF'
+
+            # Install NVM
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+            . ./.bashrc
+
+            # Install nvm
+            nvm install $NODE_VERSION
+
+            # install NPM
             npm install npm@latest -g
-            echo "[NPM] DONE" >> /tmp/script.log
+
+            # install PM2
             npm i -g pm2
-            echo "[PM2] DONE" >> /tmp/script.log
+
+            EOF
   mySecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -49,23 +56,3 @@ Resources:
           FromPort: 22
           ToPort: 22
           CidrIp: 0.0.0.0/0
-
-
-      # UserData:
-      #   Fn::Base64: 
-      #     !Sub |
-      #       #!/bin/bash
-      #       sudo apt update
-                      # sudo apt upgrade
-            # sudo apt dist-upgrade
-            # sudo apt-get autoremove
-            # sudo apt install update-manager-core
-            # sudo do-release-upgrade
-            # sudo apt install nodejs
-            # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-            # echo 'export NVM_DIR="/home/ubuntu/.nvm"' >> /home/ubuntu/.bashrc
-            # echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-            # . /home/ubuntu/.nvm/nvm.sh
-            # . /home/ubuntu/.profile
-            # . /home/ubuntu/.bashrc
-            # nvm install --lts
