@@ -4,7 +4,12 @@ This laboratory is a project created for testing and learning how to use all the
 
 I started using the my cloudformation template as JSON but discover after using it that YAML is actually better since I can the comment in my template for explaning part or commenting part that I dont wanna use.
 
-## How to use a template
+## Plan of the presentation
+
+- [Running](#running)
+- [Experiences](#experiences)
+
+## Running
 
 For using the template from this repository, you need to first go on the Cloudfront of AWS and click on the button `Create Stack`
 
